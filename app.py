@@ -1,21 +1,34 @@
 import streamlit as st
 import joblib
 
+# Load the trained model and vectorizer
 model = joblib.load("text_classifier.pkl")
 vectorizer = joblib.load("vectorizer.pkl")
 
-st.title("text classification model")
-st.write("Enter a sentence, and I'll tell you its category!")
+def predict_category(input_text, threshold=0.7):
+    # Vectorize the input text
+    input_vec = vectorizer.transform([input_text])
+    
+    # Get the probabilities of each class
+    probabilities = model.predict_proba(input_vec)[0]
+    max_prob = max(probabilities)
+    predicted_label = model.classes_[probabilities.argmax()]
 
-user_ip = st.text_area("Enter your input here....")
-
-button = st.button("Pedict")
-
-if button:
-    if user_ip.strip():
-        ip_vec = vectorizer.transform([user_ip])
-        result = model.predict(ip_vec)[0]
-        st.success(f"**Predicted Category:** {result}")
+    # If the highest probability is below the threshold, return "Unknown"
+    if max_prob < threshold:
+        return "Unknown"
     else:
-        st.warning("Please input your data!")
-        
+        return predicted_label
+
+# Streamlit app UI
+st.title("Text Category Classifier")
+st.write("Enter a text, and I'll classify it into a category!")
+
+input_text = st.text_area("Enter your text here:")
+
+if st.button("Classify"):
+    if input_text.strip():
+        predicted_category = predict_category(input_text)
+        st.write(f"**Predicted Category:** {predicted_category}")
+    else:
+        st.warning("Please enter some text to classify.")
