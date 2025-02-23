@@ -5,7 +5,7 @@ from sklearn.naive_bayes import MultinomialNB
 import joblib
 
 # Loading the data
-data = pd.read_csv("E:\F drive data\Downloads\Exp-Learning\EPICS\Dataset\CSV\Final_dataset_Shuffled_data.csv")
+data = pd.read_csv("E:\F drive data\Downloads\Exp-Learning\EPICS\Dataset\other's datasets\Epics_Main_dataset - Sheet1.csv")
 
 # Splitting the data
 X_train, X_test, Y_train, Y_test = train_test_split(data['Text'], data['Label'], test_size=0.2, random_state=42)

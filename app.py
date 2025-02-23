@@ -17,5 +17,5 @@ if button:
         result = model.predict(ip_vec)[0]
         st.success(f"**Predicted Category:** {result}")
     else:
-        st.warning("Please imput your data!")
+        st.warning("Please input your data!")
         
