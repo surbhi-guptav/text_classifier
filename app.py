@@ -20,6 +20,7 @@ def predict_category(input_text, threshold=0.7):
     else:
         return predicted_label
 
+
 # Streamlit app UI
 st.title("Text Category Classifier")
 st.write("Enter a text, and I'll classify it into a category!")
